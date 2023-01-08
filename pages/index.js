@@ -21,7 +21,7 @@ export default function weatherly(){
   }
 
   //?💛 {To take data from json object and return location data}
-  function SearchForm({ searchTerm }) {
+  function SearchForm() {
     const inputRef = useRef(null)
   
     useEffect(() => {
@@ -41,6 +41,12 @@ export default function weatherly(){
   
       submitForm()
     }, [])
+  
+    return (
+      <form>
+        <input ref={inputRef} type="text" />
+      </form>
+    )
   }
 return (
   <div>
@@ -56,10 +62,7 @@ return (
     {/* //? Form Section */}
     <div>
       <h5>Search For Weather In Your Area Below⬇️🙂</h5>
-      <form>
-        <input ref={inputRef} type="text"/>
-        {/* <input type="text" /> */}
-      </form>
+      <SearchForm />
     </div>
     {/* //? Popular Searches Section */}
     <div>
