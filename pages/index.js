@@ -2,39 +2,63 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import { get } from 'http';
 import {useRef,useEffect,useState} from 'react'
-
+import {Getsearchterm} from '../components/Getsearchterm.jsx'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function weatherly(){
+  //?❤️
+  function getcurrentlocation(){
+    navigator.geolocation.getCurrentPosition(async function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const locationData = {latitude: latitude, longitude: longitude};
+      
+      const locationJson = JSON.stringify(locationData);
+      console.log(locationJson);
+    });
+  }
 
-  // async function getLocationData(req,res){
-  //   const response = await fetch('/api/Location',options);
-  //   const data = await response.json();
-  //   return data;
-  // }
+  //?💛 {To take data from json object and return location data}
+  function SearchForm({ searchTerm }) {
+    const inputRef = useRef(null)
   
-  // getLocationData().then(locationData => {
-  //   // Use the location data here
-  // });
-
-
-
+    useEffect(() => {
+      async function submitForm() {
+        // Focus on the input element
+        inputRef.current.focus()
+  
+        // Get the search term
+        const searchTerm = await Getsearchterm()
+  
+        // Set the value of the input element
+        inputRef.current.value = searchTerm
+  
+        // Click the enter button
+        inputRef.current.form.dispatchEvent(new Event('submit'))
+      }
+  
+      submitForm()
+    }, [])
+  }
 return (
   <div>
     {/* //? Title section */}
     <div>
       <h1>Weatherly</h1>
-      <h3></h3>
+      <h3>elegant and fast</h3>
+    </div>
+    {/* //? Dark-Mode toggle section */}
+    <div>
+
     </div>
     {/* //? Form Section */}
     <div>
       <h5>Search For Weather In Your Area Below⬇️🙂</h5>
       <form>
-        {/* <input ref={inputRef} type="text"/> */}
-        <input type="text"/>
+        <input ref={inputRef} type="text"/>
+        {/* <input type="text" /> */}
       </form>
     </div>
     {/* //? Popular Searches Section */}
@@ -48,3 +72,4 @@ return (
   </div>
 )
 }
+
